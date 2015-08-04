@@ -1,18 +1,16 @@
 
 var markoWidgets = require('marko-widgets');
-var template = require('../../components/app-test-component/template.marko');
+
+var testComponent = require('../../components/app-test-component');
 
 module.exports = function(req, res) {
-    
 
-    template.render({param1: "blah"}, function(err, html, out) {
-        
-        var widgetIds = markoWidgets.getRenderedWidgetIds(out);
+    var renderResult = testComponent.render({ param1: 'blah'});
+    var widgetIds = markoWidgets.getRenderedWidgetIds(renderResult.out);
 
-        // Serialize the HTML and the widget IDs to the browser
-        res.json({
-            html: html,
-            widgetIds: widgetIds
-        });
+    // Serialize the HTML and the widget IDs to the browser
+    res.json({
+        html: renderResult.html,
+        widgetIds: widgetIds
     });
 }
